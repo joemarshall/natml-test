@@ -4,89 +4,67 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 public class HeadsetMotionGetter : MonoBehaviour
 {
+    [System.NonSerialized]
+    public string []input_bindings=
+    {
+        "<XRHMD>/centerEyePosition",
+        "<XRHMD>/centerEyeVelocity",
+        "<XRHMD>/centerEyeAcceleration",
+        "<XRHMD>/centerEyeRotation",
+        "<XRHMD>/centerEyeAngularVelocity",
+        "<XRController>{LeftHand}/devicePosition",
+        "<XRController>{LeftHand}/deviceRotation",
+        "<XRController>{RightHand}/devicePosition",
+        "<XRController>{RightHand}/deviceRotation",
+    };
+
+    private InputAction []actions;
+    public Dictionary<string,Vector4> outputs=new Dictionary<string, Vector4>(); 
 
     void Start()
     {
-        if(m_PositionInput.action!=null)
+        actions=new InputAction[input_bindings.Length];
+        for(int c=0;c<input_bindings.Length;c++)
         {
-            m_PositionInput.action.Enable();
+            actions[c]=new InputAction();
+            actions[c].AddBinding(input_bindings[c]);
+            outputs[input_bindings[c]]=Vector4.zero;
+            actions[c].Enable();
         }
-        if(m_VelocityInput.action!=null)
-        {
-            m_VelocityInput.action.Enable();
-        }
-        if(m_AccelInput.action!=null)
-        {
-            m_AccelInput.action.Enable();
-        }
-        if(m_RotationInput.action!=null)
-        {
-            m_RotationInput.action.Enable();
-        }
-        if(m_RotationalVelocityInput.action!=null)
-        {
-            m_RotationalVelocityInput.action.Enable();
-        }
-
-
     }
-
-
-    public InputActionProperty m_PositionInput;
-    public InputActionProperty m_RotationInput;
-
-    public InputActionProperty m_VelocityInput;
-    public InputActionProperty m_AccelInput;
-
-    public InputActionProperty m_RotationalVelocityInput;
-
-
-    public Vector3 pos;
-    public Vector3 vel;
-    public Vector3 accel;
-    public Quaternion rotation;
-    public Vector3 rotationVelocity;
-    
 
 
     public void Update()
     {
+        Vector4 oldVel=outputs["<XRHMD>/centerEyeVelocity"];
+        Vector4 oldPos=outputs["<XRHMD>/centerEyePosition"];
+
         float dtMult=1.0f/Time.deltaTime;
-        Vector3 oldPos=pos;
-        Vector3 oldVel=vel;
 
-        if(m_PositionInput.action!=null)
+        for(int c=0;c<actions.Length;c++)
         {
-            pos=m_PositionInput.action.ReadValue<Vector3>();
+            if(input_bindings[c].EndsWith("Rotation"))
+            {
+                Quaternion value=actions[c].ReadValue<Quaternion>();
+                outputs[input_bindings[c]]=new Vector4(value.w,value.x,value.y,value.z);
+            }else
+            {
+                outputs[input_bindings[c]]=actions[c].ReadValue<Vector3>();
+            }
         }
 
-        if(m_VelocityInput.action!=null)
+        // if no velocity, make it up from position change
+        if(outputs["<XRHMD>/centerEyeVelocity"]==Vector4.zero)
         {
-            vel=m_VelocityInput.action.ReadValue<Vector3>();
-        }else{
-            vel=(pos-oldPos)*dtMult;
-        }
-
-        if(m_AccelInput.action!=null)
-        {
-            accel=m_AccelInput.action.ReadValue<Vector3>();
-        }
-        if(accel==Vector3.zero)    
-        {
-            accel=(vel-oldVel)*dtMult;
-        }
-
-        if(m_RotationInput.action!=null)
-        {
-            rotation=m_RotationInput.action.ReadValue<Quaternion>();
-        }
-
-        if(m_RotationalVelocityInput.action!=null)
-        {
-            rotationVelocity=m_RotationalVelocityInput.action.ReadValue<Vector3>();
+            outputs["<XRHMD>/centerEyeVelocity"]=(outputs["<XRHMD>/centerEyePosition"]-oldPos)/Time.deltaTime;
         }
 
 
+        // if no acceleration, make it up
+        if(outputs["<XRHMD>/centerEyeAcceleration"]==Vector4.zero)
+        {
+            outputs["<XRHMD>/centerEyeAcceleration"]=(outputs["<XRHMD>/centerEyeVelocity"]-oldVel)/Time.deltaTime;
+        }
     }
 
 }

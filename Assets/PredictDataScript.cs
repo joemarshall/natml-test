@@ -48,9 +48,10 @@ public class PredictDataScript : MonoBehaviour
             databuffer[0,c,0]=databuffer[0,c-1,0];
         }
         // add accelerometer data to buffer
-        databuffer[0,0,0]=motion_getter.accel.x;
-        databuffer[0,0,1]=motion_getter.accel.y;
-        databuffer[0,0,2]=motion_getter.accel.z;
+        Vector3 accel=motion_getter.outputs["<XRHMD>/centerEyeAcceleration"];
+        databuffer[0,0,0]=accel.x;
+        databuffer[0,0,1]=accel.y;
+        databuffer[0,0,2]=accel.z;
 
         float[] outputs=predictor.Predict(databuffer);        
         Debug.Log("Output data: "+outputs[0]);

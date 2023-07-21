@@ -15,6 +15,7 @@ public class CaptureDataScript : MonoBehaviour
     private StreamWriter writer;
 
     float[] dataVals;
+    string[] dataNames;
 
     // Start is called before the first frame update
     void Start()
@@ -25,69 +26,23 @@ public class CaptureDataScript : MonoBehaviour
         string path = Application.persistentDataPath + "/" + startTime.ToString("yyyyMMdd_HHmm_ss") + "_data.csv";
         writer = new StreamWriter(path, true);
         Debug.Log("Writing log to: " + path);
-        string[] names = GetColumnNames();
-        string header = String.Join(",", names);
+        string header = String.Join(",", motion_getter.input_bindings);
+        print(header);
         writer.WriteLine(header);
-        dataVals = new float[names.Length];
-    }
-
-    string[] GetColumnNames()
-    {
-        string[] names = {
-        "Input.acceleration.x",
-        "Input.acceleration.y",
-        "Input.acceleration.z",
-        "Input.gyro.rotationRateUnbiased.x",
-        "Input.gyro.rotationRateUnbiased.y",
-        "Input.gyro.rotationRateUnbiased.z",
-        "headset.localPosition.x",
-        "headset.localPosition.y",
-        "headset.localPosition.z",
-        "headset.localRotation.w",
-        "headset.localRotation.x",
-        "headset.localRotation.y",
-        "headset.localRotation.z",
-        "leftController.localPosition.x",
-        "leftController.localPosition.y",
-        "leftController.localPosition.z",
-        "leftController.localPosition.x",
-        "leftController.localPosition.y",
-        "leftController.localPosition.z"
-        };
-        return names;
-
     }
 
     // Update is called once per frame
     // use this to capture data and save to the CSV file
     void Update()
     {
-        dataVals[0] = motion_getter.accel.x;
-        dataVals[1] = motion_getter.accel.y;
-        dataVals[2] = motion_getter.accel.z;
-        dataVals[3] = motion_getter.rotationVelocity.x;
-        dataVals[4] = motion_getter.rotationVelocity.y;
-        dataVals[5] = motion_getter.rotationVelocity.z;
-        dataVals[6] = headset.localPosition.x;
-        dataVals[7] = headset.localPosition.y;
-        dataVals[8] = headset.localPosition.z;
-        dataVals[9] = headset.localRotation.w;
-        dataVals[10] = headset.localRotation.x;
-        dataVals[11] = headset.localRotation.y;
-        dataVals[12] = headset.localRotation.z;
-        dataVals[13] = leftController.localPosition.x;
-        dataVals[14] = leftController.localPosition.y;
-        dataVals[15] = leftController.localPosition.z;
-        dataVals[16] = leftController.localPosition.x;
-        dataVals[17] = leftController.localPosition.y;
-        dataVals[18] = leftController.localPosition.z;
-
+        Dictionary<string,Vector4> values=motion_getter.outputs;
+        string[] col_names=motion_getter.input_bindings;
         string outStr = "";
-        for (int c = 0; c < dataVals.Length; c++)
+        for (int c = 0; c < col_names.Length; c++)
         {
-            outStr += string.Format("{0:f}", dataVals[c]);
+            outStr += string.Format("{0:f}", values[col_names[c]]);
         }
-
+        print(outStr);
         writer.WriteLine(outStr);
     }
 

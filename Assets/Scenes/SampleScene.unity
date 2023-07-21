@@ -620,7 +620,7 @@ GameObject:
   - component: {fileID: 963194228}
   - component: {fileID: 963194227}
   - component: {fileID: 963194226}
-  - component: {fileID: 963194229}
+  - component: {fileID: 963194230}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -694,7 +694,7 @@ Transform:
   m_Father: {fileID: 668311307}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &963194229
+--- !u!114 &963194230
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -703,15 +703,70 @@ MonoBehaviour:
   m_GameObject: {fileID: 963194225}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5a2a9c34df4095f47b9ca8f975175f5b, type: 3}
+  m_Script: {fileID: 11500000, guid: c2fadf230d1919748a9aa21d40f74619, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Device: 0
-  m_PoseSource: 2
-  m_PoseProviderComponent: {fileID: 0}
   m_TrackingType: 0
   m_UpdateType: 0
-  m_UseRelativeTransform: 0
+  m_PositionInput:
+    m_UseReference: 0
+    m_Action:
+      m_Name: Position Input
+      m_Type: 0
+      m_ExpectedControlType: 
+      m_Id: 463c9a2f-3037-4995-b099-5d8a63c9d7dd
+      m_Processors: 
+      m_Interactions: 
+      m_SingletonActionBindings:
+      - m_Name: 
+        m_Id: 83160f88-bda4-4f3e-8c1e-01208bae9513
+        m_Path: <XRHMD>/centerEyePosition
+        m_Interactions: 
+        m_Processors: 
+        m_Groups: 
+        m_Action: Position Input
+        m_Flags: 0
+      m_Flags: 0
+    m_Reference: {fileID: 0}
+  m_RotationInput:
+    m_UseReference: 0
+    m_Action:
+      m_Name: Rotation Input
+      m_Type: 0
+      m_ExpectedControlType: 
+      m_Id: f609e84c-e98c-49f8-9f5c-11f24b33595f
+      m_Processors: 
+      m_Interactions: 
+      m_SingletonActionBindings:
+      - m_Name: 
+        m_Id: 000fa2cf-acb6-46c2-969c-de0a138e590c
+        m_Path: <XRHMD>/centerEyeRotation
+        m_Interactions: 
+        m_Processors: 
+        m_Groups: 
+        m_Action: Rotation Input
+        m_Flags: 0
+      m_Flags: 0
+    m_Reference: {fileID: 0}
+  m_PositionAction:
+    m_Name: 
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+  m_RotationAction:
+    m_Name: 
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+  m_HasMigratedActions: 1
 --- !u!1 &1042647498
 GameObject:
   m_ObjectHideFlags: 0
@@ -756,6 +811,106 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 165e60079cbcd43429e3a2e9e2e7e863, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_PositionInput:
+    m_UseReference: 0
+    m_Action:
+      m_Name: Position Input
+      m_Type: 0
+      m_ExpectedControlType: 
+      m_Id: 0bbf4ffd-a255-4aae-8cbb-1c21096016d0
+      m_Processors: 
+      m_Interactions: 
+      m_SingletonActionBindings:
+      - m_Name: 
+        m_Id: 385523ef-ac9d-48fb-8344-c009e43832c4
+        m_Path: <XRHMD>/centerEyePosition
+        m_Interactions: 
+        m_Processors: 
+        m_Groups: 
+        m_Action: Position Input
+        m_Flags: 0
+      m_Flags: 0
+    m_Reference: {fileID: 0}
+  m_RotationInput:
+    m_UseReference: 0
+    m_Action:
+      m_Name: Rotation Input
+      m_Type: 0
+      m_ExpectedControlType: 
+      m_Id: 456b2241-78d6-4d1e-ab38-4842edc051f0
+      m_Processors: 
+      m_Interactions: 
+      m_SingletonActionBindings:
+      - m_Name: 
+        m_Id: 5471bd77-06e7-4d48-a4ea-c5649aec2454
+        m_Path: <XRHMD>/centerEyeRotation
+        m_Interactions: 
+        m_Processors: 
+        m_Groups: 
+        m_Action: Rotation Input
+        m_Flags: 0
+      m_Flags: 0
+    m_Reference: {fileID: 0}
+  m_VelocityInput:
+    m_UseReference: 0
+    m_Action:
+      m_Name: Velocity Input
+      m_Type: 0
+      m_ExpectedControlType: 
+      m_Id: 931af67b-63c1-4c29-9ba0-5f9ee7bc3c68
+      m_Processors: 
+      m_Interactions: 
+      m_SingletonActionBindings:
+      - m_Name: 
+        m_Id: 61b75df3-33a8-4556-abaf-8d368519fd9f
+        m_Path: <XRHMD>/centerEyeVelocity
+        m_Interactions: 
+        m_Processors: 
+        m_Groups: 
+        m_Action: Velocity Input
+        m_Flags: 0
+      m_Flags: 0
+    m_Reference: {fileID: 0}
+  m_AccelInput:
+    m_UseReference: 0
+    m_Action:
+      m_Name: Accel Input
+      m_Type: 0
+      m_ExpectedControlType: 
+      m_Id: 12097d93-3efa-4132-9f97-1fa2bc347386
+      m_Processors: 
+      m_Interactions: 
+      m_SingletonActionBindings:
+      - m_Name: 
+        m_Id: 7fcfdbcb-2f62-4554-b7af-127c5e013f7d
+        m_Path: <XRHMD>/centerEyeAcceleration
+        m_Interactions: 
+        m_Processors: 
+        m_Groups: 
+        m_Action: Accel Input
+        m_Flags: 0
+      m_Flags: 0
+    m_Reference: {fileID: 0}
+  m_RotationalVelocityInput:
+    m_UseReference: 0
+    m_Action:
+      m_Name: Rotational Velocity Input
+      m_Type: 0
+      m_ExpectedControlType: 
+      m_Id: 0c90a786-ec28-44ad-873e-120be5246b54
+      m_Processors: 
+      m_Interactions: 
+      m_SingletonActionBindings:
+      - m_Name: 
+        m_Id: 542d89bf-b29e-4915-9b99-66b5e2e6108d
+        m_Path: <XRHMD>/centerEyeAngularVelocity
+        m_Interactions: 
+        m_Processors: 
+        m_Groups: 
+        m_Action: Rotational Velocity Input
+        m_Flags: 0
+      m_Flags: 0
+    m_Reference: {fileID: 0}
   pos: {x: 0, y: 0, z: 0}
   vel: {x: 0, y: 0, z: 0}
   accel: {x: 0, y: 0, z: 0}

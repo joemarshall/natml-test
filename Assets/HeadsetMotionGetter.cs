@@ -1,23 +1,53 @@
 using UnityEngine.XR;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 public class HeadsetMotionGetter : MonoBehaviour
 {
 
-    List<XRNodeState> nodeStates = new List<XRNodeState>();
-
-    UnityEngine.XR.InputDevice device;
-
     void Start()
     {
-        device = InputDevices.GetDeviceAtXRNode(XRNode.CenterEye);
+        if(m_PositionInput.action!=null)
+        {
+            m_PositionInput.action.Enable();
+        }
+        if(m_VelocityInput.action!=null)
+        {
+            m_VelocityInput.action.Enable();
+        }
+        if(m_AccelInput.action!=null)
+        {
+            m_AccelInput.action.Enable();
+        }
+        if(m_RotationInput.action!=null)
+        {
+            m_RotationInput.action.Enable();
+        }
+        if(m_RotationalVelocityInput.action!=null)
+        {
+            m_RotationalVelocityInput.action.Enable();
+        }
+
+
     }
+
+
+    public InputActionProperty m_PositionInput;
+    public InputActionProperty m_RotationInput;
+
+    public InputActionProperty m_VelocityInput;
+    public InputActionProperty m_AccelInput;
+
+    public InputActionProperty m_RotationalVelocityInput;
+
 
     public Vector3 pos;
     public Vector3 vel;
     public Vector3 accel;
-    public Vector3 rotations;
+    public Quaternion rotation;
+    public Vector3 rotationVelocity;
     
+
 
     public void Update()
     {
@@ -25,15 +55,37 @@ public class HeadsetMotionGetter : MonoBehaviour
         Vector3 oldPos=pos;
         Vector3 oldVel=vel;
 
-        InputFeatureUsage<Vector3> pos_usage = UnityEngine.XR.CommonUsages.centerEyePosition;
-        if (device.TryGetFeatureValue(pos_usage, out pos))
+        if(m_PositionInput.action!=null)
         {
-            Debug.Log("PX:" + (pos.x));
+            pos=m_PositionInput.action.ReadValue<Vector3>();
         }
-        vel=(pos-oldPos)*dtMult;
-        accel=(vel-oldVel)*dtMult;
-        Debug.Log("VX:"+ (vel.x));
-        Debug.Log("AX:"+ (accel.x));
+
+        if(m_VelocityInput.action!=null)
+        {
+            vel=m_VelocityInput.action.ReadValue<Vector3>();
+        }else{
+            vel=(pos-oldPos)*dtMult;
+        }
+
+        if(m_AccelInput.action!=null)
+        {
+            accel=m_AccelInput.action.ReadValue<Vector3>();
+        }
+        if(accel==Vector3.zero)    
+        {
+            accel=(vel-oldVel)*dtMult;
+        }
+
+        if(m_RotationInput.action!=null)
+        {
+            rotation=m_RotationInput.action.ReadValue<Quaternion>();
+        }
+
+        if(m_RotationalVelocityInput.action!=null)
+        {
+            rotationVelocity=m_RotationalVelocityInput.action.ReadValue<Vector3>();
+        }
+
 
     }
 

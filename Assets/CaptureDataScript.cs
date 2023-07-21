@@ -65,9 +65,9 @@ public class CaptureDataScript : MonoBehaviour
         dataVals[0] = motion_getter.accel.x;
         dataVals[1] = motion_getter.accel.y;
         dataVals[2] = motion_getter.accel.z;
-        dataVals[3] = motion_getter.rotations.x;
-        dataVals[4] = motion_getter.rotations.y;
-        dataVals[5] = motion_getter.rotations.z;
+        dataVals[3] = motion_getter.rotationVelocity.x;
+        dataVals[4] = motion_getter.rotationVelocity.y;
+        dataVals[5] = motion_getter.rotationVelocity.z;
         dataVals[6] = headset.localPosition.x;
         dataVals[7] = headset.localPosition.y;
         dataVals[8] = headset.localPosition.z;
